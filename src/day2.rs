@@ -38,12 +38,12 @@ pub fn part2(input: &str) -> i32 {
         .into_iter()
         .filter(|line| {
             (0..line.len()).any(|i| {
-                let list_with_index_removed: Vec<i32> = line
+                let filtered_list: Vec<i32> = line
                     .iter()
                     .enumerate()
                     .filter_map(|(j, k)| if i != j { Some(*k) } else { None })
                     .collect();
-                list_with_index_removed.is_sorted() && list_with_index_removed.is_safe()
+                filtered_list.is_sorted() && filtered_list.is_safe()
             })
         })
         .count() as i32
