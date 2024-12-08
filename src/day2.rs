@@ -36,7 +36,7 @@ pub fn part1(input: &str) -> i32 {
 pub fn part2(input: &str) -> i32 {
     parse_input(input)
         .into_iter()
-        .map(|line| {
+        .filter(|line| {
             (0..line.len()).any(|i| {
                 let list_with_index_removed: Vec<i32> = line
                     .iter()
@@ -46,6 +46,5 @@ pub fn part2(input: &str) -> i32 {
                 list_with_index_removed.is_sorted() && list_with_index_removed.is_safe()
             })
         })
-        .filter(|x| *x)
         .count() as i32
 }
