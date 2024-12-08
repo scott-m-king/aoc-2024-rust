@@ -1,6 +1,6 @@
 fn parse_input(input: &str) -> Vec<Vec<i32>> {
     input
-        .split("\n")
+        .lines()
         .map(|x| {
             x.split_whitespace()
                 .filter_map(|y| y.parse::<i32>().ok())
