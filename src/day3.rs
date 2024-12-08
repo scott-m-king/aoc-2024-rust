@@ -7,7 +7,7 @@ fn parse_input(input: &str) -> Vec<(i32, i32)> {
         .map(|m| m.as_str())
         .map(|line| {
             if let (Some(start), Some(end)) = (line.find("("), line.find(")")) {
-                let result: &Vec<&str> = &line[start + 1..end].split(",").collect();
+                let result: Vec<&str> = line[start + 1..end].split(",").collect();
                 return (result[0].parse().unwrap(), result[1].parse().unwrap());
             }
             (0, 0)
@@ -22,5 +22,24 @@ pub fn part1(input: &str) -> i32 {
 }
 
 pub fn part2(input: &str) -> i32 {
+    let deactivations = Regex::new(r"don't\(\)")
+        .unwrap()
+        .find_iter(input)
+        .map(|m| m.end())
+        .collect::<Vec<usize>>();
+
+    let reactivations = Regex::new(r"do\(\)")
+        .unwrap()
+        .find_iter(input)
+        .map(|m| m.end())
+        .collect::<Vec<usize>>();
+
+    deactivations
+        .iter()
+        .zip(reactivations.iter())
+        .for_each(|(&l, &r)| {
+            let substring = &input[l..r];
+            println!("{:?}", substring);
+        });
     0
 }

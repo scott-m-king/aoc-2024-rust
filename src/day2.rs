@@ -1,3 +1,19 @@
+trait SafetyChecks {
+    fn is_sorted(&self) -> bool;
+    fn is_safe(&self) -> bool;
+}
+
+impl SafetyChecks for Vec<i32> {
+    fn is_sorted(&self) -> bool {
+        self.is_sorted_by(|x, y| x.cmp(y).is_gt()) || self.is_sorted_by(|x, y| x.cmp(y).is_lt())
+    }
+
+    fn is_safe(&self) -> bool {
+        self.windows(2)
+            .all(|w| (1..=3).contains(&(w[0] - w[1]).abs()))
+    }
+}
+
 fn parse_input(input: &str) -> Vec<Vec<i32>> {
     input
         .lines()
@@ -7,22 +23,6 @@ fn parse_input(input: &str) -> Vec<Vec<i32>> {
                 .collect::<Vec<i32>>()
         })
         .collect::<Vec<Vec<i32>>>()
-}
-
-trait SafetyFeatures {
-    fn is_sorted(&self) -> bool;
-    fn is_safe(&self) -> bool;
-}
-
-impl SafetyFeatures for Vec<i32> {
-    fn is_sorted(&self) -> bool {
-        self.is_sorted_by(|x, y| x.cmp(y).is_gt()) || self.is_sorted_by(|x, y| x.cmp(y).is_lt())
-    }
-
-    fn is_safe(&self) -> bool {
-        self.windows(2)
-            .all(|w| (1..=3).contains(&(w[0] - w[1]).abs()))
-    }
 }
 
 pub fn part1(input: &str) -> i32 {
